@@ -1,6 +1,7 @@
 import task1 from "./task1";
-import { Contact } from "./task1/oop-ts/AdressBook/Contact";
+import { PowerSwitch, LightBulb } from "./solid.principles";
 
-const me = new Contact();
+const bulb = new LightBulb();
+const s1 = new PowerSwitch(bulb);
 
-const;
+s1.pressSwitch();

@@ -18,23 +18,29 @@ class PiggyBank {
 
 // O - open / closed
 //Code should be open for futher development but closed for internal modification
-type recepies = Array<Bread | Roll>;
 
-class Bread {
+type recepiesP = Array<IBaking>;
+
+interface IBaking {
+  description: string;
+  specialIngridient(): void;
+}
+
+class Bread implements IBaking {
   constructor(public description: string, public ingridient: string) {}
   specialIngridient() {
     console.log(this.ingridient);
   }
 }
 
-class Roll {
+class Roll implements IBaking {
   constructor(public description: string, public ingridient: string) {}
   specialIngridient() {
     console.log(this.ingridient);
   }
 }
 
-function bakeMachine(recepies: recepies) {
+function bakeMachine(recepies: recepiesP) {
   recepies.forEach((recepie) => {
     console.log(recepie.description);
     recepie.specialIngridient();
@@ -55,7 +61,7 @@ class Dog {
   run(value: number) {
     console.log(`Runs ${value}km/h`);
   }
-  barks() {
+  barks(): void {
     console.log("Woof");
   }
 }
@@ -68,7 +74,7 @@ class GermanShepherd extends Dog {
     console.log(`Moves ${value}km/h`);
   }
 
-  barks() {
+  barks(): void {
     console.log("Woof");
   }
 }
@@ -103,12 +109,12 @@ class Radio implements IRadio {
 // D - dependency inversion
 // higher order modules code shouldnt depend on lower module code - but both of them should depend od abstraction
 
-export class Switchable {
-  turnOn() {}
-  turnOff() {}
+class Switchable {
+  turnOn(): void {}
+  turnOff(): void {}
 }
 
-export class LightBulb extends Switchable {
+class LightBulb extends Switchable {
   turnOn() {
     console.log("Turned on!");
   }
@@ -118,7 +124,7 @@ export class LightBulb extends Switchable {
   }
 }
 
-export class PowerSwitch {
+class PowerSwitch {
   public isOn: boolean = false;
   constructor(public client: Switchable) {}
 

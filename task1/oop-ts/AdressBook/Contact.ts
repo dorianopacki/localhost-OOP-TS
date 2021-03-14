@@ -30,7 +30,6 @@ export class Contact implements IContact {
   modifyBasicData(key: basicDataKeys, name: string) {
     //validate if name is valid
     isModifiable(key, name);
-    //set new name
     this[key] = name;
     this.updateModified();
   }

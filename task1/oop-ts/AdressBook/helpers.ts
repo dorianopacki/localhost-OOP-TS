@@ -1,4 +1,5 @@
 import { basicDataKeys, IContact } from "./Contact";
+import { IGroup } from "./Group";
 
 export const updateDate = () => {
   const today = new Date().toLocaleString();
@@ -35,6 +36,7 @@ export const isNameValid = (name: string) => {
   return true;
 };
 
+// needed
 export const doesContactExistInList = (
   name: string,
   array: Array<IContact>
@@ -48,5 +50,54 @@ export const removeFromList = (name: string, array: Array<IContact>) => {
 
   let copy = [...array];
   copy = copy.filter((el) => el.name !== name);
+  return copy;
+};
+
+//needed
+export const doesGroupExistInList = (name: string, array: Array<IGroup>) => {
+  const copy = [...array];
+  return copy.some((el) => el.name === name);
+};
+
+//needed
+export const removeGroupFromList = (name: string, array: Array<IGroup>) => {
+  let copy = [...array];
+  return (copy = copy.filter((el) => el.name !== name));
+};
+
+//needed
+export const changeGroupName = (
+  name: string,
+  value: string,
+  array: Array<IGroup>
+) => {
+  let copy = [...array];
+  for (let i = 0; i < copy.length; i++) {
+    if (copy[i].name === name) {
+      copy[i].name = value;
+    }
+  }
+  return copy;
+};
+
+//needed
+export const removeContactFromList = (name: string, array: Array<IContact>) => {
+  let copy = [...array];
+  return copy.filter((el) => el.name !== name);
+};
+
+//needed
+export const modifyContent = (
+  name: string,
+  key: basicDataKeys,
+  value: string,
+  array: Array<IContact>
+) => {
+  let copy = [...array];
+  for (let i = 0; i < copy.length; i++) {
+    if (copy[i].name === name) {
+      copy[i][key] === value;
+    }
+  }
   return copy;
 };

@@ -12,6 +12,13 @@ import {
 export interface IAdressBook {
   groups: Array<IGroup>;
   contactsList: Array<IContact>;
+  searchForContact(name: string): Array<IContact>;
+  removeContact(name: string): void;
+  addContact(contact: IContact): void;
+  modifyContact(name: string, key: basicDataKeys, value: string): void;
+  addGroup(group: IGroup): void;
+  removeGroup(name: string): void;
+  changeGroupName(name: string, value: string): void;
 }
 
 export class AdressBook implements IAdressBook {
@@ -42,6 +49,7 @@ export class AdressBook implements IAdressBook {
 
   modifyContact(name: string, key: basicDataKeys, value: string) {
     //check if arguments are valid
+    //if email - check email
     if (!doesContactExistInList(name, this.contactsList))
       throw new Error("Such a contact doesn't exist");
     const modifiedData = modifyContent(name, key, value, this.contactsList);

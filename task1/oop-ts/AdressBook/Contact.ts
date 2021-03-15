@@ -1,5 +1,8 @@
 import { v4 as uuid } from "uuid";
+import { isValidName } from "../../Utils/Validation";
 import { updateDate, isModifiable } from "./helpers";
+
+export type basicDataKeys = "name" | "surname" | "email";
 
 export interface IContact {
   name: string;
@@ -8,9 +11,9 @@ export interface IContact {
   modified: string;
   created: string;
   id: string;
+  updateModified(): void;
+  modifyBasicData(key: basicDataKeys, name: string): void;
 }
-
-export type basicDataKeys = "name" | "surname" | "email";
 
 export class Contact implements IContact {
   constructor(
@@ -28,7 +31,7 @@ export class Contact implements IContact {
   }
 
   modifyBasicData(key: basicDataKeys, name: string) {
-    //validate if name is valid
+    isValidName(name);
     isModifiable(key, name);
     this[key] = name;
     this.updateModified();

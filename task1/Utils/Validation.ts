@@ -26,7 +26,8 @@ export const isValidCategory = (name: string) => {
 export const isValidName = (name: string) => {
   const validation = name.length > 2;
 
-  if (!validation) throw new Error("Given name is not valid");
+  if (!validation)
+    throw new Error("Given name should be at least two characters");
 };
 
 export const isArrayNotEmpty = <T>(array: Array<T>) => {

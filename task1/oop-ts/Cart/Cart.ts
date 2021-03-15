@@ -19,6 +19,10 @@ export interface ICart {
   discount: number;
   discountCode: string;
   id: string;
+  addProduct(product: ICartItem, quantity: number): void;
+  changeQuantity(name: string, value: number): void;
+  removeItem(name: string): void;
+  getPrice(name: string): number;
 }
 
 export type productType = { product: ICartItem; quantity: number };

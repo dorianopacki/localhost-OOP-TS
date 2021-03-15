@@ -45,9 +45,6 @@ export const doesContactExistInList = (
 };
 
 export const removeFromList = (name: string, array: Array<IContact>) => {
-  if (!doesContactExistInList(name, array))
-    throw new Error("Such a contact doesn't exist");
-
   let copy = [...array];
   copy = copy.filter((el) => el.name !== name);
   return copy;

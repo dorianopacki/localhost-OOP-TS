@@ -6,6 +6,10 @@ export interface IGroup {
   contactList: Array<IContact>;
   name: string;
   id: string;
+  changeGroupName(name: string): void;
+  doesContactExist(name: string): boolean;
+  addContact(contact: IContact): void;
+  removeContact(name: string): void;
 }
 
 export class Group implements IGroup {
@@ -16,35 +20,30 @@ export class Group implements IGroup {
   ) {}
 
   changeGroupName(name: string) {
-    //check if name is valid
     isNameValid(name);
-    //change group name
     this.name = name;
   }
 
   doesContactExist(name: string) {
-    //is name valid
-    //does exist in array
-    if (doesContactExistInList(name, this.contactList)) {
-      return true;
-    }
+    isNameValid(name);
+    if (!doesContactExistInList(name, this.contactList)) return false;
 
-    return false;
+    return true;
   }
 
   addContact(contact: IContact) {
-    //is contact valid
     if (doesContactExistInList(contact.name, this.contactList))
       throw new Error("Such a contact already exists");
-    //push to array
 
     this.contactList.push(contact);
   }
 
   removeContact(name: string) {
-    //check if exists
+    isNameValid(name);
+    if (!doesContactExistInList(name, this.contactList))
+      throw new Error("Such a contact doesn't exist");
+
     const listAfterRemove = removeFromList(name, this.contactList);
     this.contactList = listAfterRemove;
-    //remove
   }
 }

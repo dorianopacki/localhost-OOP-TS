@@ -13,6 +13,10 @@ export interface ICartItem {
   price: number;
   discount: number;
   id: string;
+  setPrice(value: number): void;
+  setDiscount(value: number): void;
+  addCategory(name: string): void;
+  setName(name: string): void;
 }
 
 export class CartItem implements ICartItem {

@@ -28,3 +28,10 @@ export const isValidName = (name: string) => {
 
   if (!validation) throw new Error("Given name is not valid");
 };
+
+export const isArrayNotEmpty = <T>(array: Array<T>) => {
+  const validation = array.length > 0;
+  if (!validation) return false;
+
+  return true;
+};

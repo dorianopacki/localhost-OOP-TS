@@ -1,12 +1,17 @@
 import { v4 as uuid } from "uuid";
 import { ICartItem } from "./CartItem";
-import { isValidName } from "../../Utils/Validation";
+import {
+  isValidName,
+  isValidNumber,
+  isArrayNotEmpty,
+} from "../../Utils/Validation";
 import {
   sumOfProductsPrice,
   priceAfterDiscount,
   removeItem,
   doesProductExist,
   changeQuantityOnList,
+  increaseQuantity,
 } from "./helpers";
 
 export interface ICart {
@@ -27,12 +32,24 @@ export class Cart implements ICart {
   ) {}
 
   addProduct(product: ICartItem, quantity: number) {
-    //validate product
-    this.products.push({ product, quantity });
+    isValidNumber(quantity);
+    if (!doesProductExist(this.products, product.name)) {
+      this.products.push({ quantity, product });
+    } else {
+      const productsWithIncreasedQuantity = increaseQuantity(
+        product.name,
+        this.products,
+        quantity
+      );
+      this.products = productsWithIncreasedQuantity;
+    }
   }
 
   changeQuantity(name: string, quantity: number) {
-    doesProductExist(this.products, name);
+    isValidNumber(quantity);
+    if (!doesProductExist(this.products, name))
+      throw new Error("There is no such a product on list");
+
     const changedProductList = changeQuantityOnList(
       this.products,
       quantity,
@@ -43,12 +60,16 @@ export class Cart implements ICart {
 
   removeItem(name: string) {
     isValidName(name);
-    doesProductExist(this.products, name);
+    if (!doesProductExist(this.products, name))
+      throw new Error("There is no such a product on list");
+
     const newProductsList = removeItem(this.products, name);
     this.products = newProductsList;
   }
 
   getPrice() {
+    if (!isArrayNotEmpty(this.products)) throw new Error("Cart is empty");
+
     const priceOfAllProducts = sumOfProductsPrice(this.products);
     const priceWithDiscount = priceAfterDiscount(
       this.discount,

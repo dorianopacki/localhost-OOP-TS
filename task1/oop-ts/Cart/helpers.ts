@@ -1,6 +1,8 @@
 import { ICartItem } from "./CartItem";
 import { productType } from "./Cart";
 
+export type objectOfProducts = { quantity: number; product: ICartItem };
+
 export const priceAfterDiscount = (value: number, price: number) => {
   if (value > 0) {
     const copy = price;
@@ -32,9 +34,9 @@ export const doesProductExist = (array: Array<productType>, name: string) => {
   const toSearch = new RegExp(name.toString(), "gi");
   if (array.some((el) => !!el.product.name.match(toSearch))) {
     return true;
-  } else {
-    throw new Error("This product doesn't exist on list");
   }
+
+  return false;
 };
 
 export const changeQuantityOnList = (
@@ -51,5 +53,18 @@ export const changeQuantityOnList = (
       return el;
     }
   });
+  return copy;
+};
+
+export const increaseQuantity = (
+  name: string,
+  array: Array<objectOfProducts>,
+  quantity: number
+) => {
+  const copy = [...array];
+  copy.map((el) =>
+    el.product.name === name ? (el.quantity += quantity) : null
+  );
+
   return copy;
 };

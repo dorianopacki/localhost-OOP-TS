@@ -2,17 +2,22 @@ import { IContact } from "./Contact";
 import { isNameValid, doesContactExistInList, removeFromList } from "./helpers";
 import { v4 as uuid } from "uuid";
 
-export interface IGroup {
-  contactList: Array<IContact>;
-  name: string;
-  id: string;
-  changeGroupName(name: string): void;
-  doesContactExist(name: string): boolean;
-  addContact(contact: IContact): void;
-  removeContact(name: string): void;
+interface withUUID {
+  readonly id: string;
+}
+interface withName {
+  readonly name: string;
 }
 
-export class Group implements IGroup {
+export interface IGroup {
+  contactList: Array<IContact>;
+  changeGroupName(name: string): void;
+  doesContactExist(contact: IContact): boolean;
+  addContact(contact: IContact): void;
+  removeContact(contact: IContact): void;
+}
+
+export class Group implements withUUID, withName, IGroup {
   constructor(
     public contactList: Array<IContact>,
     public name: string,
@@ -24,7 +29,7 @@ export class Group implements IGroup {
     this.name = name;
   }
 
-  doesContactExist(name: string) {
+  doesContactExist(contact: IContact) {
     isNameValid(name);
     if (!doesContactExistInList(name, this.contactList)) return false;
 

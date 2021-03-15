@@ -25,6 +25,10 @@ export interface ICart {
   getPrice(name: string): number;
 }
 
+// Cart (list of cartitems, discount)
+// CartItem (product + qty)
+// Product (name, price, discount, category...)
+
 export type productType = { product: ICartItem; quantity: number };
 
 export class Cart implements ICart {
@@ -49,10 +53,12 @@ export class Cart implements ICart {
     }
   }
 
-  changeQuantity(name: string, quantity: number) {
+  changeQuantity(product, newQty) {
     isValidNumber(quantity);
     if (!doesProductExist(this.products, name))
       throw new Error("There is no such a product on list");
+
+    // .changeQty(newQty)
 
     const changedProductList = changeQuantityOnList(
       this.products,

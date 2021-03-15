@@ -98,3 +98,11 @@ export const modifyContent = (
   }
   return copy;
 };
+
+export const getContactFromList = (name: string, array: Array<IContact>) => {
+  const copy = [...array];
+  const searchedElement = copy.filter((el) => {
+    return el.name.includes(name);
+  });
+  return searchedElement;
+};

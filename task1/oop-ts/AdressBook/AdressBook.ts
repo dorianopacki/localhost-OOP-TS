@@ -7,18 +7,22 @@ import {
   changeGroupName,
   removeContactFromList,
   modifyContent,
+  isModifiable,
+  getContactFromList,
 } from "./helpers";
+import { isValidName } from "../../Utils/Validation";
 
 export interface IAdressBook {
   groups: Array<IGroup>;
+  addGroup(group: IGroup): void;
+  removeGroup(name: string): void;
+  changeGroupName(name: string, value: string): void;
+
   contactsList: Array<IContact>;
   searchForContact(name: string): Array<IContact>;
   removeContact(name: string): void;
   addContact(contact: IContact): void;
   modifyContact(name: string, key: basicDataKeys, value: string): void;
-  addGroup(group: IGroup): void;
-  removeGroup(name: string): void;
-  changeGroupName(name: string, value: string): void;
 }
 
 export class AdressBook implements IAdressBook {
@@ -28,9 +32,10 @@ export class AdressBook implements IAdressBook {
   ) {}
 
   searchForContact(name: string) {
-    const searchedContact = this.contactsList.filter((el) => {
-      return el.name.includes(name);
-    });
+    const searchedContact = getContactFromList(name, this.contactsList);
+    if (searchedContact.length < 1)
+      throw new Error("Couldn't find that contact");
+
     return searchedContact;
   }
 
@@ -48,8 +53,7 @@ export class AdressBook implements IAdressBook {
   }
 
   modifyContact(name: string, key: basicDataKeys, value: string) {
-    //check if arguments are valid
-    //if email - check email
+    isModifiable(key, name);
     if (!doesContactExistInList(name, this.contactsList))
       throw new Error("Such a contact doesn't exist");
     const modifiedData = modifyContent(name, key, value, this.contactsList);
@@ -70,7 +74,7 @@ export class AdressBook implements IAdressBook {
   }
 
   changeGroupName(name: string, value: string) {
-    //check if arguments are valid
+    isValidName(name);
     if (!doesGroupExistInList(name, this.groups))
       throw new Error("Such a group doesn't exist");
     const changedArray = changeGroupName(name, value, this.groups);

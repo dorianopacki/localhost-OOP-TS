@@ -11,21 +11,34 @@ export interface IContact {
   modified: string;
   created: string;
   id: string;
-  updateModified(): void;
+  // updateModified(): void;
   modifyBasicData(key: basicDataKeys, name: string): void;
 }
 
-export class Contact implements IContact {
-  constructor(
-    public name: string,
-    public surname: string,
-    public email: string,
-    public modified = "-",
-    public created = new Date().toLocaleString(),
-    readonly id = uuid()
-  ) {}
+// hermetyzacja
 
-  updateModified() {
+export class Contact implements IContact {
+  readonly id = uuid();
+
+  public name: string;
+  public surname: string;
+  public email: string;
+
+  public created = new Date().toLocaleString();
+  public modified = new Date().toLocaleString();
+
+  constructor(name: string, surname: string, email: string) {
+    // validacja
+    this.name = name;
+    // validacja
+
+    this.surname = surname;
+    // validacja
+
+    this.email = email;
+  }
+
+  private _updateModified() {
     const updatedDate = updateDate();
     this.modified = updatedDate;
   }
@@ -34,6 +47,6 @@ export class Contact implements IContact {
     isValidName(name);
     isModifiable(key, name);
     this[key] = name;
-    this.updateModified();
+    this._updateModified();
   }
 }

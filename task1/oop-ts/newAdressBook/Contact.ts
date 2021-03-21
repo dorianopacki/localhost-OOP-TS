@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Validator } from "./Validator";
+import { isModifiable } from "../../Utils/Validation";
 
 export type basicDataKeys = "name" | "surname" | "email";
 
@@ -33,19 +34,17 @@ export class Contact {
   }
 
   private _updateDate() {
-    const today = new Date().toLocaleString();
+    const today = new Date();
     return today;
   }
 
   private _updateModified() {
     const updatedDate = this._updateDate();
-    //create function to update Data
     this.modified = updatedDate;
   }
 
   modifyBasicData(key: basicDataKeys, name: string) {
     if (!Validator.isValidName(name)) throw new Error("Name is not valid");
-    //check if may modify data
     isModifiable(key, name);
     this[key] = name;
     this._updateModified();

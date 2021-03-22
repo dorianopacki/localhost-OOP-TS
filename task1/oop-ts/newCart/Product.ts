@@ -3,18 +3,17 @@ import { Validator } from "./Validator";
 
 export interface IProduct {
   id: string;
-  // name: string;
-  // category: string;
   price: number;
-  // discount: number;
 }
 
 export class Product implements IProduct {
   readonly id = uuid();
+
   private _name: string;
   private _category: Array<string>;
-  public price: number;
   private _discount: number;
+
+  public price: number;
 
   constructor(
     name: string,

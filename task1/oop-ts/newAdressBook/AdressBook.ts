@@ -23,9 +23,21 @@ export class AdressBook implements IAdressBook {
     return searchItem;
   }
 
-  addContact(contact: IContact) {}
+  addContact(value: IContact) {
+    this.contactList.push(value);
+  }
 
-  removeContact(id: string) {}
+  removeContact(id: string) {
+    if (!this.contactList.some((contact) => contact.id === id))
+      throw new Error("There is no such a contact");
+    const listWithoutContact = this.contactList.filter(
+      (contact) => contact.id !== id
+    );
+    this.contactList = listWithoutContact;
+  }
 
-  modifyUser(id: string) {}
+  modifyUser(id: string) {
+    if (!this.contactList.some((contact) => contact.id === id))
+      throw new Error("There is no such a contact");
+  }
 }

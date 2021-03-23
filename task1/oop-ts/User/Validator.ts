@@ -25,4 +25,10 @@ export class Validator {
 
     return false;
   };
+
+  static isValidBirthDate = function (value: string): boolean {
+    //to implement validation of date
+
+    return true;
+  };
 }

@@ -9,7 +9,7 @@ export interface IProduct {
 export class Product implements IProduct {
   readonly id = uuid();
 
-  private _name: string;
+  public name: string;
   private _category: Array<string>;
   private _discount: number;
 
@@ -22,7 +22,7 @@ export class Product implements IProduct {
     discount: number
   ) {
     if (!Validator.isValidName(name)) throw new Error("Name is not valid");
-    this._name = name;
+    this.name = name;
     if (!Validator.isValidCategory(category))
       throw new Error("Category is not valid");
     this._category = category;
@@ -35,7 +35,7 @@ export class Product implements IProduct {
 
   set setProductName(name: string) {
     if (!Validator.isValidName(name)) throw new Error("Name is not valid");
-    this._name = name;
+    this.name = name;
   }
 
   set setProductPrice(price: number) {

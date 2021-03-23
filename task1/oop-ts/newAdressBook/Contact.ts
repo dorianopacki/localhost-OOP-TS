@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Validator } from "./Validator";
-import { isModifiable } from "../../Utils/Validation";
+import { isValueValid } from "../../Utils/Validation";
 
 export type basicDataKeys = "name" | "surname" | "email";
 
@@ -13,13 +13,12 @@ export interface IContact {
   id: string;
 }
 
-export class Contact {
+export class Contact implements IContact {
   readonly id = uuid();
 
   public name: string;
   public surname: string;
   public email: string;
-
   public created = new Date();
   public modified = new Date();
 
@@ -33,20 +32,14 @@ export class Contact {
     this.email = email;
   }
 
-  private _updateDate() {
-    const today = new Date();
-    return today;
-  }
-
   private _updateModified() {
-    const updatedDate = this._updateDate();
-    this.modified = updatedDate;
+    const currentDate = new Date();
+    this.modified = currentDate;
   }
 
-  modifyBasicData(key: basicDataKeys, name: string) {
-    if (!Validator.isValidName(name)) throw new Error("Name is not valid");
-    isModifiable(key, name);
-    this[key] = name;
+  modifyBasicData(key: basicDataKeys, value: string) {
+    if (!isValueValid(key, value)) throw new Error("Value is not valid");
+    this[key] = value;
     this._updateModified();
   }
 }

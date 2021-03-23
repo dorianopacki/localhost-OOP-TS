@@ -2,9 +2,9 @@ import task1 from "./task1";
 import { Product } from "./task1/oop-ts/newCart/Product";
 import { CartItem } from "./task1/oop-ts/newCart/CartItem";
 import { Cart } from "./task1/oop-ts/newCart/Cart";
-import { Switch } from "./task1/oop-ts/dynamicSwitch/DynamicSwitch";
 import { User } from "./task1/oop-ts/User/User";
-import { App } from "./task1/oop-ts/User/App";
+import { Contact } from "./task1/oop-ts/newAdressBook/Contact";
+import { AdressBook } from "./task1/oop-ts/newAdressBook/AdressBook";
 
 // const bar = new Product("snickers", ["low_sugar"], 5, 0);
 // const water = new Product("fiji", ["drinks"], 2, 0);
@@ -15,6 +15,7 @@ import { App } from "./task1/oop-ts/User/App";
 // const item3 = new CartItem(3, rice);
 
 // const koszyk = new Cart([item, item2, item3], 50);
+// console.log(koszyk);
 
 const a = new User(
   "Dorian",
@@ -22,16 +23,6 @@ const a = new User(
   "21/05/1998",
   "Fabianek12#",
   "male",
-  "dorianwew@gmail.com"
+  "ssq21@wp.pl"
 );
-
-const b = new App([a]);
-b.createUser(
-  "Bartek",
-  "Ochędzan",
-  "12/12/2020",
-  "Yellow12#",
-  "male",
-  "bartosh@wp.pl"
-);
-console.log(b);
+console.log(a);

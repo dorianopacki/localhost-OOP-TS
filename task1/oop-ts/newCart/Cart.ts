@@ -11,10 +11,10 @@ export interface ICart {
 }
 
 export class Cart implements ICart {
-  id = uuid();
-  productsList: Array<ICartItem>;
-  discount: number;
-  discountCode?: string;
+  readonly id = uuid();
+  public productsList: Array<ICartItem>;
+  public discount: number;
+  public discountCode?: string;
 
   constructor(
     productsList: Array<ICartItem>,
@@ -57,6 +57,12 @@ export class Cart implements ICart {
   addItem(item: ICartItem) {
     if (!this._doesElementExistInArray(item.product.id)) {
       this.productsList.push(item);
+    } else {
+      for (let element of this.productsList) {
+        if (element.product.id !== item.product.id) {
+          element.quantity += item.quantity;
+        }
+      }
     }
   }
 

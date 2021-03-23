@@ -1,24 +1,15 @@
-import { v4 as uuid } from "uuid";
-import { IUserManager } from "./App";
-import { accesLevel, IUser, User } from "./User";
+import { User, GenderType, UserRole } from "./User";
 
-export interface IAdmin extends IUser, IUserManager {}
-
-export class Admin extends User implements IAdmin {
+export class Admin extends User {
   constructor(
-    name: string,
-    surname: string,
-    birthDate: string,
-    password: string,
-    gender: string,
-    email: string
+    public firstName: string,
+    public surname: string,
+    public birthDate: string,
+    public password: string,
+    public gender: GenderType,
+    public email: string,
+    public accesLevel = UserRole.Admin
   ) {
-    super(name, surname, birthDate, password, gender, email);
+    super(firstName, surname, birthDate, password, gender, email);
   }
-
-  changeUserPassword() {}
-
-  changeUserAccesLevel() {}
-
-  changeUserEmail() {}
 }

@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { Validator } from "./Validator";
 export type GenderType = "male" | "female";
 
@@ -7,15 +8,18 @@ export enum UserRole {
 }
 
 export interface IUser {
+  id: string;
   firstName: string;
   surname: string;
   birthDate: string;
   password: string;
   gender: GenderType;
   email: string;
+  accesLevel: UserRole;
 }
 
 export class User implements IUser {
+  readonly id = uuid();
   public firstName: string;
   public surname: string;
   public birthDate: string;

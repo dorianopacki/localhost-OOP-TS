@@ -9,6 +9,7 @@ import App from "./task1/oop-ts/User/App";
 import { Admin } from "./task1/oop-ts/User/Admin";
 import { Switch } from "./task1/oop-ts/dynamicSwitch/DynamicSwitch";
 import { EmailBuilder } from "./task1//oop-ts/emailBuilder/EmailBuilder";
+import { Email } from "./task1/oop-ts/emailBuilder/Email";
 
 const email = new EmailBuilder("zenek", "zdzisiek", "oddaj rower");
 email.setCc(["aaaa", "bbbb", "cccc"]);

@@ -7,14 +7,21 @@ export interface IBooking {
 }
 
 export class Booking implements IBooking {
-  bookId: string;
-  title: string;
-  picked = new Date();
-  returnDate = new Date();
-  fine: number;
+  readonly bookId: string;
+  public title: string;
+  public picked = new Date();
+  public returnDate = new Date();
+  public fine: number;
   constructor(bookId: string, title: string, fine: number) {
     this.bookId = bookId;
     this.title = title;
     this.fine = fine;
   }
+
+  // booking to wiele książek
+  // booking powinna zawierac klasę user
+
+  // dodać książke
+  // odjac książke
+  // przeliczyć fine
 }

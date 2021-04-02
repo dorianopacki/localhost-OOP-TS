@@ -1,25 +1,24 @@
 import { IBook, Book } from "./Book";
 import { IBooking, Booking } from "./Booking";
-import { IUser, User } from "./User";
+import { calculateFine } from "./utils";
 
 export interface ILibrary {
   booksList: Array<IBook>;
   bookingList: Array<IBooking>;
-  pickedBooks: Array<IBook>;
 }
 
 export class Library implements ILibrary {
   public booksList: Array<IBook>;
   public bookingList: Array<IBooking>;
-  public pickedBooks: Array<IBook>;
+  public fine: number;
   constructor(
     booksList: Array<IBook>,
     bookingList: Array<IBooking>,
-    pickedBooks: Array<IBook>
+    fine: number
   ) {
     this.booksList = booksList;
     this.bookingList = bookingList;
-    this.pickedBooks = pickedBooks;
+    this.fine = fine;
   }
 
   private _doesBookExistInList(id: string) {
@@ -28,9 +27,32 @@ export class Library implements ILibrary {
     return true;
   }
 
-  addBook(title: string, author: string, description: string) {
-    const newBook = new Book(title, author, description);
-    this.booksList.push(newBook);
+  private _isBookAvailable(bookId: string) {
+    // .some
+    for (let book of this.booksList) {
+      if (book.id === bookId) {
+        if (book.isAvaible) return true;
+
+        return false;
+      }
+    }
+  }
+
+  private _setBookStatus(bookId: string) {
+    for (let book of this.booksList) {
+      if (book.id === bookId) {
+        book.isAvaible = !book.isAvaible;
+      }
+    }
+  }
+
+  static createBook(title: string, author: string, description: string) {
+    return new Book(title, author, description);
+  }
+
+  addBook(book: IBook) {
+    // brak duplikatów
+    this.booksList.push(book);
   }
 
   removeBook(id: string) {
@@ -42,14 +64,29 @@ export class Library implements ILibrary {
     this.booksList = listWithoutRemovedBook;
   }
 
-  landBookForUser(bookId: string, userId: string) {
-    //validacja
+  landBookForUser(book: IBook, user: IUser) {
     if (!this._doesBookExistInList(bookId))
       throw new Error("This book does not exist in list");
+    if (!this._isBookAvailable(bookId))
+      throw new Error("This book is not available");
+
+    const landedBook = new Booking(user, userId, this.fine);
+    this.bookingList.push(landedBook);
+    this._setBookStatus(bookId);
   }
-  //todo
-  // - dodawanie książek do listy
-  // - usuwanie książek z listy
-  // - wypożyczanie książki dla usera X
-  // - oddanie wypożyczania książki
+
+  returnBook(bookId: string) {
+    const bookingInfo = this.bookingList.find(
+      (booking) => booking.bookId === bookId
+    );
+    if (!bookingInfo) throw new Error("there is no such a booking");
+
+    const bookingListWithoutReturned = this.bookingList.filter(
+      (booking) => booking.bookId !== bookId
+    );
+
+    this.bookingList = bookingListWithoutReturned;
+    this._setBookStatus(bookId);
+    const possibleFine = calculateFine(bookingInfo.bookId, this.fine);
+  }
 }

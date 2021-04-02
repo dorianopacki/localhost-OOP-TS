@@ -19,6 +19,7 @@ export class Contact implements IContact {
   public name: string;
   public surname: string;
   public email: string;
+
   public created = new Date();
   public modified = new Date();
 

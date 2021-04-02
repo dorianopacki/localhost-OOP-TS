@@ -1,3 +1,6 @@
+import { Validator } from "./Validator";
+import { v4 as uuid } from "uuid";
+
 export interface IUser {
   id: string;
   name: string;
@@ -5,12 +8,13 @@ export interface IUser {
 }
 
 export class User implements IUser {
-  public id: string;
+  readonly id = uuid();
   public name: string;
   public surname: string;
-  constructor(id: string, name: string, surname: string) {
-    this.id = id;
+  constructor(name: string, surname: string) {
+    if (!Validator.isValidName(name)) throw new Error("Name is not valid");
     this.name = name;
+    if (!Validator.isValidName(name)) throw new Error("Name is not valid");
     this.surname = surname;
   }
 }

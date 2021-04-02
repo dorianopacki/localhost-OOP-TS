@@ -2,12 +2,12 @@ import { IEmail, Email } from "./Email";
 import { Validator } from "./Validator";
 
 export class EmailBuilder {
-  public email: IEmail;
+  private email: IEmail;
   constructor(to: string, from: string, title: string) {
     if (Validator.isValidEmail(to)) throw new Error("Invalid target email");
     if (Validator.isValidEmail(from)) throw new Error("Invalid shipper email");
     if (Validator.isValidTitle(title)) throw new Error("Invalid title");
-    this.email = new Email(to, from, title);
+    this.email = {...}
   }
 
   setCc(cc: Array<string>) {
@@ -23,5 +23,9 @@ export class EmailBuilder {
   setHtml(html: string) {
     if (!Validator.isValidHtml(html)) throw new Error("Invalid html");
     this.email.html = html;
+  }
+
+  build(){
+    return new Email(this.email)
   }
 }

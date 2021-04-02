@@ -1,4 +1,4 @@
-import { Validator } from "../User/Validator";
+import { Validator } from "./Validator";
 import { Admin } from "./Admin";
 import { GenderType, IUser, User, UserRole } from "./User";
 
@@ -83,7 +83,7 @@ class App implements IApp {
     this.usersList.push(newAdmin);
   }
 
-  changeUserRole(id: string, accesLevel: UserRole): void {
+  changeUserRole(admin, user, accesLevel: UserRole): void {
     if (!this._doesUserExist(id)) throw new Error("No such a user");
     this.usersList.forEach((user) => {
       if (user.id === id) {

@@ -17,9 +17,9 @@ export class Switch {
 
   isValid() {
     for (let i = 0; i < this.statements.length; i++) {
-      if (this.statements[i][0]) continue;
-      if (!this.statements[i][0]) {
-        const callback = this.statements[i][1];
+      const [cond, callback] = this.statements[i];
+      if (cond) continue;
+      if (cond) {
         callback();
         break;
       }

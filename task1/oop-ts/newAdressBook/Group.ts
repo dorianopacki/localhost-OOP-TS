@@ -21,7 +21,7 @@ export class Group implements IGroup {
     this.groupName = groupName;
   }
 
-  set setGroupName(name: string) {
+  setGroupName(name: string) {
     if (!Validator.isValidName(name)) throw new Error("Name is not valid");
 
     this.groupName = name;
@@ -47,4 +47,6 @@ export class Group implements IGroup {
     );
     this._contactList = listWithoutContact;
   }
+
+  // ??
 }

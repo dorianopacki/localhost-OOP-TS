@@ -4,6 +4,10 @@ import { Validator } from "./Validator";
 export interface IProduct {
   id: string;
   price: number;
+  setProductName: (name: string) => void;
+  setProductPrice: (price: number) => void;
+  setProductDiscount: (discount: number) => void;
+  addProductCategory: (category: string) => void;
 }
 
 export class Product implements IProduct {
@@ -33,23 +37,23 @@ export class Product implements IProduct {
     this._discount = discount;
   }
 
-  set setProductName(name: string) {
+  setProductName(name: string) {
     if (!Validator.isValidName(name)) throw new Error("Name is not valid");
     this.name = name;
   }
 
-  set setProductPrice(price: number) {
+  setProductPrice(price: number) {
     if (!Validator.isValidValue(price)) throw new Error("Price is not valid");
     this.price = price;
   }
 
-  set setProductDiscount(discount: number) {
+  setProductDiscount(discount: number) {
     if (!Validator.isValidValue(discount))
       throw new Error("Discount is not valid");
     this._discount = discount;
   }
 
-  set addProductCategory(category: string) {
+  addProductCategory(category: string) {
     if (!Validator.isValidName(category))
       throw new Error("Category name is not valid");
     this._category.push(category);

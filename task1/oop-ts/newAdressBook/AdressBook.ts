@@ -22,9 +22,9 @@ export class AdressBook implements IAdressBook {
     return true;
   }
 
-  searchForContact(name: string) {
+  searchForContact(phrase: string) {
     const searchItem = this.contactList.filter((contact) =>
-      contact.name.includes(name)
+      contact.containsPhrase(phrase)
     );
 
     return searchItem;
@@ -67,5 +67,4 @@ export class AdressBook implements IAdressBook {
 
     this.groupList = groupListWithoutElement;
   }
-  //add option to modify group
 }

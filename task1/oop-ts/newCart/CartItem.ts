@@ -13,4 +13,6 @@ export class CartItem implements ICartItem {
     this.quantity = quantity;
     this.product = product;
   }
+
+  ??
 }

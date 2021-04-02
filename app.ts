@@ -1,16 +1,26 @@
+import { dataManager } from "./task1/async/promiseMethods/serveFromCache/mangeData";
+import { pathToFileURL } from "url";
 import task1 from "./task1";
-import { Product } from "./task1/oop-ts/newCart/Product";
-import { CartItem } from "./task1/oop-ts/newCart/CartItem";
-import { Cart } from "./task1/oop-ts/newCart/Cart";
-import { User } from "./task1/oop-ts/User/User";
-import { Contact } from "./task1/oop-ts/newAdressBook/Contact";
-import { AdressBook } from "./task1/oop-ts/newAdressBook/AdressBook";
-import App from "./task1/oop-ts/User/App";
-import { Admin } from "./task1/oop-ts/User/Admin";
-import { Switch } from "./task1/oop-ts/dynamicSwitch/DynamicSwitch";
-import { EmailBuilder } from "./task1//oop-ts/emailBuilder/EmailBuilder";
-import { Email } from "./task1/oop-ts/emailBuilder/Email";
+import { getData } from "./task1/async/promiseMethods/serveFromCache/fetchData";
+import { checkIfFileExists } from "./task1/async/promiseMethods/serveFromCache/helpers";
+import {
+  prom1,
+  prom2,
+  prom3,
+} from "./task1/async/promiseMethods/MOCK_PROMISES";
+import { recursivePromise } from "./task1/async/promiseMethods/recursivePromise/recursivePromise";
+import {
+  promiseAll,
+  promiseRace,
+  promiseLast,
+  promiseIgnore,
+} from "./task1/async/promiseMethods/promiseMethods/promiseMethods";
 
-const email = new EmailBuilder("zenek", "zdzisiek", "oddaj rower");
-email.setCc(["aaaa", "bbbb", "cccc"]);
-console.log(email);
+// const a = recursivePromise([prom1, prom2, prom3]);
+// a.then((payLoad) => console.log(payLoad));
+
+// const a = Promise.all([prom1, prom2, prom3]);
+// a.then((value) => console.log(value)).catch((err) => console.log(err));
+
+import { start } from "./task1/async/promiseMethods/mailWithHook/server";
+start();

@@ -8,6 +8,10 @@ export interface ICart {
   productsList: Array<ICartItem>;
   discount: number;
   discountCode?: string;
+  removeItem: (id: string) => void;
+  addItem: (item: ICartItem) => void;
+  changeQuantity: (id: string, quantity: number) => void;
+  getCartPrice: () => number;
 }
 
 export class Cart implements ICart {
@@ -41,7 +45,7 @@ export class Cart implements ICart {
 
   private _sumItemsPrice() {
     const cartPrice = this.productsList.reduce((acc, av) => {
-      acc += av.product.price * av.quantity;
+      acc += av.product.price * av.quantity; // av.calculateDiscountedPrice()
       return acc;
     }, 0);
     return cartPrice;
@@ -60,7 +64,7 @@ export class Cart implements ICart {
     } else {
       for (let element of this.productsList) {
         if (element.product.id !== item.product.id) {
-          element.quantity += item.quantity;
+          element.quantity += item.quantity; // cartItem.changeQty(...)
         }
       }
     }
